@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard · CURA-X</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <div>
+        <h1>CURA-X</h1>
+        <p>Admin Dashboard · Security Operations</p>
+    </div>
+    <div class="account-controls">
+        <span class="secure-badge">{{ username }} · Admin</span>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button class="secondary small" type="submit">Sign out</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <section class="stats">
+        <div class="card"><small>REQUESTS</small><strong id="requests">0</strong></div>
+        <div class="card"><small>THREATS BLOCKED</small><strong id="threats">0</strong></div>
+        <div class="card"><small>DATA LEAKS PREVENTED</small><strong id="leaks">0</strong></div>
+        <div class="card"><small>HUMAN REVIEWS</small><strong id="reviews">0</strong></div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">
+            <h2>Security Audit Log</h2>
+            <button class="secondary small" onclick="loadLogs()">Refresh</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Risk</th>
+                        <th>Status</th>
+                        <th>Threat</th>
+                        <th>Review decision</th>
+                    </tr>
+                </thead>
+                <tbody id="logs"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="notice">
+        <strong>Hackathon Safety Notice</strong>
+        <p>This dashboard contains synthetic patient data and local demonstration activity only.</p>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

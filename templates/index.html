@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURA-X</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>CURA-X</h1>
+        <p>Doctor Dashboard · Clinical AI Review</p>
+    </div>
+    <div class="account-controls">
+        <span class="secure-badge">{{ username }} · Doctor</span>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button class="secondary small" type="submit">Sign out</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <section class="stats">
+        <div class="card">
+            <small>REQUESTS</small>
+            <strong id="requests">0</strong>
+        </div>
+        <div class="card">
+            <small>THREATS BLOCKED</small>
+            <strong id="threats">0</strong>
+        </div>
+        <div class="card">
+            <small>DATA LEAKS PREVENTED</small>
+            <strong id="leaks">0</strong>
+        </div>
+        <div class="card">
+            <small>HUMAN REVIEWS</small>
+            <strong id="reviews">0</strong>
+        </div>
+    </section>
+
+    <section class="grid">
+        <div class="panel">
+            <h2>🤖 AI Security Assistant</h2>
+
+            <label>Selected synthetic patient</label>
+            <select id="patient">
+                <option value="P001">P001 — Rahul Menon</option>
+                <option value="P002">P002 — Ananya Nair</option>
+                <option value="P003">P003 — Arjun Das</option>
+            </select>
+
+            <label>Request</label>
+            <textarea id="prompt" placeholder="Example: Summarize the patient's medical history."></textarea>
+
+            <button onclick="analyze()">ANALYZE REQUEST</button>
+
+            <div class="demo-buttons">
+                <button class="secondary" onclick="demo('safe')">Safe Demo</button>
+                <button class="danger" onclick="demo('injection')">Attack Demo</button>
+                <button class="warning" onclick="demo('highrisk')">High-Risk Demo</button>
+            </div>
+        </div>
+
+        <div class="panel result-panel">
+            <h2>🛡️ Security Analysis</h2>
+
+            <div id="empty" class="empty">
+                Submit a request to see the security analysis.
+            </div>
+
+            <div id="result" class="hidden">
+                <div class="risk-row">
+                    <div>
+                        <small>RISK SCORE</small>
+                        <div id="riskScore" class="score">0</div>
+                    </div>
+                    <div id="riskLevel" class="risk-badge">LOW</div>
+                </div>
+
+                <div id="status" class="status"></div>
+
+                <h3>Security Checks</h3>
+                <div id="checks"></div>
+
+                <h3>Reasons</h3>
+                <ul id="reasons"></ul>
+
+                <div id="aiBox" class="ai-box hidden">
+                    <h3>AI Response</h3>
+                    <p id="aiResponse"></p>
+                </div>
+
+                <div id="reviewBox" class="review hidden">
+                    <strong>⚠ HUMAN REVIEW REQUIRED</strong>
+                    <p>A high-risk AI/clinical action cannot be automatically approved.</p>
+                    <button onclick="reviewAction('APPROVED')">APPROVE</button>
+                    <button class="danger" onclick="reviewAction('REJECTED')">REJECT</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="notice">
+        <strong>⚠ Hackathon Safety Notice</strong>
+        <p>
+            This prototype uses synthetic patient data and simulated security
+            scenarios only. It does not connect to real hospitals, medical
+            devices, production systems, or real patient records.
+        </p>
+    </section>
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
